@@ -24,33 +24,34 @@ body {
     position: relative;
 }
 
-/* FUNDO ANIMADO MESH GRADIENT */
+/* FUNDO FIXO MESH GRADIENT */
 .aurora-bg {
     position: fixed;
-    top: 0; left: 0; width: 100vw; height: 100vh;
+    top: 0; left: 0; width: 100%; height: 100%;
     z-index: -1; background: var(--bg-dark);
     overflow: hidden; pointer-events: none;
 }
 
 .aurora-blob {
-    position: absolute; border-radius: 50%; filter: blur(140px); opacity: 0.28;
+    position: absolute; border-radius: 50%; filter: blur(130px); opacity: 0.35;
     mix-blend-mode: screen;
-    transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.8s ease-in-out;
+    will-change: transform, opacity;
+    transition: transform 0.1s ease-out, opacity 0.1s ease-out; /* Resposta imediata ao scroll */
 }
 
 .aurora-1 {
-    top: -10%; left: 20%; width: 550px; height: 550px;
+    top: -5%; left: 25%; width: 550px; height: 550px;
     background: radial-gradient(circle, var(--blue-glow) 0%, rgba(0,0,0,0) 70%);
 }
 
 .aurora-2 {
-    bottom: 5%; right: -5%; width: 600px; height: 600px;
+    bottom: 10%; right: -5%; width: 600px; height: 600px;
     background: radial-gradient(circle, #1B81B3 0%, rgba(0,0,0,0) 70%);
 }
 
 .aurora-3 {
-    top: 45%; left: -15%; width: 400px; height: 400px;
-    background: radial-gradient(circle, rgba(45,165,223,0.4) 0%, rgba(0,0,0,0) 70%);
+    top: 35%; left: -10%; width: 450px; height: 450px;
+    background: radial-gradient(circle, rgba(45,165,223,0.5) 0%, rgba(0,0,0,0) 70%);
 }
 
 .badge {
@@ -89,51 +90,50 @@ body {
 .scroll-arrow { margin-top: 40px; font-size: 1.3rem; color: var(--text-muted); animation: bounce 2s infinite; }
 @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
 
-/* SEÇÃO SOBRE NÓS E CARD DE 60% */
+/* SEÇÃO SOBRE NÓS E CARD REFORMULADO (60% DA TELA) */
 .about-section {
-    min-height: 85vh; display: flex; align-items: center; justify-content: center; padding: 80px 24px;
+    min-height: 90vh; display: flex; align-items: center; justify-content: center; padding: 100px 24px;
 }
 
-.section-container { display: flex; flex-direction: column; align-items: center; text-align: center; }
+.section-container { width: 100%; display: flex; flex-direction: column; align-items: center; text-align: center; }
 
+/* Título bem afastado */
 .about-title {
-    font-size: 2.5rem; font-weight: 600; color: var(--text-white); margin-bottom: 35px; letter-spacing: -1px;
+    font-size: 2.8rem; font-weight: 600; color: var(--text-white); margin-bottom: 65px; letter-spacing: -1px;
 }
 
-.glass-card.wide-card {
-  width: 60vw; max-width: 950px; height: auto; min-height: 240px;
-  background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-  border-radius: 24px; border: 1px solid rgba(255, 255, 255, 0.12);
-  position: relative; overflow: hidden; transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+/* Forçando o tamanho real de 60vw e mais imponência visual */
+.wide-glass-card {
+  width: 60vw; max-width: 1000px; min-height: 320px;
+  background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border-radius: 28px; border: 1px solid rgba(255, 255, 255, 0.12);
+  position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.4s;
 }
 
-.glass-card.wide-card::before {
+.wide-glass-card::before {
   content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
 }
 
-.glass-card.wide-card::after {
-  content: ''; position: absolute; top: 0; left: 0; width: 1px; height: 100%;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.5), transparent, rgba(255, 255, 255, 0.1));
+.wide-glass-card:hover {
+    border-color: rgba(45, 165, 223, 0.5);
+    transform: translateY(-5px);
+    box-shadow: 0 30px 60px rgba(45, 165, 223, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
-.glass-card.wide-card:hover {
-    border-color: rgba(45, 165, 223, 0.6);
-    box-shadow: 0 25px 50px rgba(45, 165, 223, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.4);
-    transform: translateY(-6px);
+.wide-card-content {
+    padding: 60px 80px; width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
 }
 
-.glass-card.wide-card .glass-card-content {
-    padding: 50px 60px; text-align: center; display: flex; align-items: center; justify-content: center;
-}
-
-.glass-card.wide-card .glass-card-content p {
-    font-size: 1.05rem; color: rgba(255, 255, 255, 0.75); line-height: 1.8; letter-spacing: 0.2px;
+.wide-card-content p {
+    font-size: 1.15rem; color: rgba(255, 255, 255, 0.8); line-height: 1.9; letter-spacing: 0.3px; text-shadow: 0 2px 10px rgba(0,0,0,0.5);
 }
 
 /* PLANOS */
-.pricing-section { padding: 100px 24px 160px 24px; }
+.pricing-section { padding: 120px 24px 160px 24px; }
 .pricing-container { max-width: 900px; margin: 0 auto; text-align: center; }
 .section-title { font-size: 2.2rem; font-weight: 600; letter-spacing: -1px; margin-bottom: 60px; }
 .pricing-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; }
@@ -170,15 +170,15 @@ body {
 
 /* REVELAÇÃO DO SCROLL */
 .scroll-reveal {
-    opacity: 0; transform: translateY(40px);
-    transition: opacity 0.9s cubic-bezier(0.25, 1, 0.5, 1), transform 0.9s cubic-bezier(0.25, 1, 0.5, 1);
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
 }
-
 .scroll-reveal.active { opacity: 1; transform: translateY(0); }
 
-@media (max-width: 900px) {
+/* RESPONSIVIDADE */
+@media (max-width: 968px) {
     .pricing-grid { grid-template-columns: 1fr; }
-    .glass-card.wide-card { width: 90vw; }
-    .glass-card.wide-card .glass-card-content { padding: 40px 24px; }
-    .about-title { font-size: 2rem; }
+    .wide-glass-card { width: 90vw; }
+    .wide-card-content { padding: 40px 24px; }
+    .about-title { font-size: 2.2rem; margin-bottom: 40px; }
 }
