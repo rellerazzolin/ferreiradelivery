@@ -60,7 +60,7 @@ body {
     color: var(--text-muted); letter-spacing: 0.5px; margin-bottom: 24px; text-transform: uppercase;
 }
 
-/* NAVBAR MODERNA (Sem Borda de Separação) */
+/* NAVBAR MODERNA */
 .navbar {
     position: fixed; top: 0; left: 0; width: 100%; height: 75px;
     backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
@@ -74,7 +74,7 @@ body {
 
 .nav-brand { font-weight: 600; font-size: 1rem; letter-spacing: -0.3px; color: var(--text-white); }
 
-/* NOVO GRUPO DA ESQUERDA (Ancoragem absoluta para o menu) */
+/* GRUPO DA ESQUERDA (Bloqueia o desalinhamento no Desktop) */
 .nav-left-group {
     position: relative;
     display: flex;
@@ -82,12 +82,11 @@ body {
     height: 100%;
 }
 
-/* CONTAINER DO BOTÃO */
 .menu-wrapper {
     display: flex; align-items: center; justify-content: center; 
     width: 44px; height: 44px; cursor: pointer;
     position: relative; 
-    z-index: 150; /* Garante que o X fique sempre por cima */
+    z-index: 150;
 }
 
 .menu-toggle-icon {
@@ -104,7 +103,7 @@ body {
 .menu-toggle-icon.open { transform: rotate(-45deg); }
 .menu-toggle-icon.open .animated-path { stroke-dasharray: 20 300; stroke-dashoffset: -32.42px; }
 
-/* NAV MENU HORIZONTAL DESKTOP (Sempre ao lado do botão) */
+/* MENU DESKTOP (Sempre fixado à direita do botão) */
 .nav-horizontal-menu {
     display: flex; align-items: center; gap: 28px;
     background: rgba(255, 255, 255, 0.03);
@@ -137,16 +136,65 @@ body {
     padding: 6px 16px; background: var(--text-white); color: var(--bg-dark); font-size: 0.8rem; font-weight: 600; border-radius: 100px;
 }
 
-/* HERO */
+/* HERO REFORMULADO (Layout Lado a Lado + Vídeo Vertical) */
 .hero {
-    min-height: 100vh; display: flex; align-items: center; justify-content: center;
-    text-align: center; padding: 100px 24px 40px 24px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 120px 32px 40px 32px;
+    position: relative;
 }
 
-.hero-center { max-width: 700px; }
-.logo-container { margin: 15px auto 35px auto; }
+.hero-flex-container {
+    max-width: 1200px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+}
+
+.hero-left-text {
+    flex: 1;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.logo-container { margin: 15px 0 0 0; width: 100%; }
 .hero-logo { max-width: 480px; width: 100%; height: auto; filter: drop-shadow(0 0 50px rgba(45, 165, 223, 0.18)); }
-.scroll-arrow { margin-top: 40px; font-size: 1.3rem; color: var(--text-muted); animation: bounce 2s infinite; }
+
+/* Container do Vídeo Vertical (Proporção 9:16) */
+.hero-video-wrapper {
+    position: relative;
+    width: 320px;
+    aspect-ratio: 9 / 16;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 40px rgba(45, 165, 223, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.hero-video-wrapper video { width: 100%; height: 100%; object-fit: cover; }
+
+/* Botão Mute/Unmute Estilo Vidro Fosco */
+.video-audio-control {
+    position: absolute; bottom: 16px; right: 16px;
+    width: 38px; height: 38px; border-radius: 50%;
+    background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.15); color: var(--text-white);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; z-index: 10; transition: all 0.3s ease;
+}
+.video-audio-control:hover { background: rgba(45, 165, 223, 0.3); border-color: var(--blue-glow); transform: scale(1.05); }
+
+.scroll-arrow { 
+    position: absolute; bottom: 30px;
+    font-size: 1.3rem; color: var(--text-muted); animation: bounce 2s infinite; 
+}
 @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
 
 /* SEÇÃO SOBRE NÓS E CARD GIGANTE */
@@ -211,25 +259,24 @@ body {
 
 .footer { padding: 40px 24px; text-align: center; border-top: 1px solid rgba(255, 255, 255, 0.01); font-size: 0.8rem; color: var(--text-muted); }
 
-/* REVELAÇÃO DO SCROLL */
+/* REVELAÇÃO NO SCROLL */
 .scroll-reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); }
 .scroll-reveal.active { opacity: 1; transform: translateY(0); }
 
-/* RESPONSIVIDADE (Pílula Perfeita Centralizada no Mobile) */
+/* RESPONSIVIDADE (Ajuste Fino Geral + Pílula Mobile Centralizada) */
 @media (max-width: 968px) {
     .pricing-grid { grid-template-columns: 1fr; }
     .glass-card { width: 90vw; }
     .glass-card-content { padding: 40px 24px; }
     .about-title { font-size: 2.2rem; margin-bottom: 40px; }
     
+    /* Configuração da Pílula Flutuante no Mobile */
     .nav-horizontal-menu { 
         position: fixed;
         left: 50%; 
         top: 90px; 
-        
         width: calc(100% - 48px); 
         max-width: 360px; 
-        
         justify-content: center;
         gap: 20px; 
         padding: 10px 24px; 
@@ -248,4 +295,10 @@ body {
 
     .nav-horizontal-menu a.menu-item { font-size: 0.85rem; }
     .nav-horizontal-menu .nav-btn { padding: 6px 14px; font-size: 0.78rem; }
+
+    /* Adaptação do Hero para Celular (Empilhado) */
+    .hero { padding: 120px 24px 60px 24px; }
+    .hero-flex-container { flex-direction: column; text-align: center; gap: 40px; }
+    .hero-left-text { align-items: center; text-align: center; }
+    .hero-video-wrapper { width: 260px; }
 }
