@@ -3,109 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ferreira Delivery | Estética Automotiva em Santiago, RS</title>
+    <title>Ferreira Delivery | Premium Detailing</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Google Fonts para Tipografia Moderna -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Oswald:wght@400;700&display=swap" rel="stylesheet">
-    <!-- FontAwesome para Ícones -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <!-- MESH GRADIENT DE FUNDO FIXO PARA EFEITO VISUAL PREMIUM -->
-    <div class="mesh-background"></div>
+    <div class="aurora-bg">
+        <div class="aurora-blob aurora-1"></div>
+        <div class="aurora-blob aurora-2"></div>
+        <div class="aurora-blob aurora-3"></div>
+    </div>
 
-    <!-- SEÇÃO HERO (HEADER CENTRALIZADO) -->
-    <header class="hero">
-        <div class="container hero-container">
-            <div class="logo-wrapper">
-                <!-- Referência exata ao arquivo de logotipo fornecido -->
-                <img src="Logo-fundo-cinza (1).png" alt="Logo Ferreira Delivery Detail" class="main-logo">
+    <nav class="navbar">
+        <div class="nav-container">
+            <span class="nav-brand">Ferreira Delivery</span>
+            <div class="nav-links">
+                <a href="#sobre">Sobre</a>
+                <a href="#planos">Planos</a>
             </div>
-            <h1 class="hero-title">O Brilho de um Carro Novo, <br><span class="text-gradient">Sem Sair de Casa</span></h1>
-            <p class="hero-lead">Estética automotiva de alto padrão diretamente no seu endereço.</p>
-            <a href="https://wa.me/5555999999999?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20um%20hor%C3%A1rio!" target="_blank" class="btn-cta">
-                <i class="fa-brands fa-whatsapp"></i> Agendar Meu Horário Agora
-            </a>
+            <a href="https://wa.me/5555999999999" target="_blank" class="nav-btn">Agendar</a>
         </div>
-        <div class="scroll-indicator">
-            <p>Role para baixo</p>
-            <i class="fa-solid fa-chevron-down"></i>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-center">
+            <div class="badge">Estética Automotiva Autônoma</div>
+            <div class="logo-container">
+                <img src="Logo-fundo-cinza (1).png" alt="Ferreira Delivery Detail" class="hero-logo">
+            </div>
+            <p class="hero-subtitle">O padrão estético que seu veículo merece, diretamente na sua garagem.</p>
+            <div class="scroll-arrow">↓</div>
         </div>
     </header>
 
-    <!-- SEÇÃO SOBRE NÓS (GLASSMORPHISM CENTRALIZADO) -->
-    <section class="about-section" id="sobre">
-        <div class="container">
+    <section id="sobre" class="about-section scroll-reveal">
+        <div class="section-container">
+            <div class="badge">Inovação em Estética</div>
             <div class="glass-card">
-                <div class="card-badge">Estética Automotiva Delivery</div>
-                <h2>Sobre Nós</h2>
-                <p class="about-text">
-                    A Ferreira Delivery Detail leva o mais alto padrão de estética automotiva até a sua garagem em Santiago, RS. Lavagem premium com produtos de alta qualidade, enquanto você foca no que realmente importa.
-                </p>
-                <div class="about-features">
-                    <div class="feature-item">
-                        <i class="fa-solid fa-house-chimney"></i>
-                        <span>Atendimento no Seu Endereço</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fa-solid fa-star"></i>
-                        <span>Produtos Premium</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fa-solid fa-clock"></i>
-                        <span>Economia de Tempo</span>
-                    </div>
+                <div class="glass-card-content">
+                    <h3>Sobre Nós</h3>
+                    <p>A Ferreira Delivery Detail leva o mais alto padrão de estética automotiva até a sua garagem em Santiago, RS. Lavagem premium com produtos de alta qualidade, enquanto você foca no que realmente importa.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- SEÇÃO NOSSOS SERVIÇOS -->
-    <section class="services-section" id="servicos">
-        <div class="container">
-            <h2 class="section-title">Nossos Serviços</h2>
+    <section id="planos" class="pricing-section scroll-reveal">
+        <div class="pricing-container">
+            <div class="badge">Nossos Planos</div>
+            <h2 class="section-title">Escolha sua Experiência</h2>
             
-            <!-- CARD AZUL PREMIUM -->
-            <div class="blue-card">
-                <div class="blue-card-content">
-                    <span class="service-tag">O Carro-Chefe</span>
-                    <h3>Lavagem e Detalhamento Premium</h3>
-                    <p>Um tratamento completo focado nos mínimos detalhes do seu veículo. Eliminamos as impurezas mais profundas e devolvemos o aspecto de zero quilômetro utilizando apenas insumos de ponta, técnicas de fricção segura e proteção da pintura.</p>
-                    
-                    <ul class="service-list">
-                        <li><i class="fa-solid fa-check"></i> Limpeza detalhada de caixa de rodas e pneus</li>
-                        <li><i class="fa-solid fa-check"></i> Pré-lavagem com shampoo automotivo de alta densidade</li>
-                        <li><i class="fa-solid fa-check"></i> Higienização interna profunda</li>
-                        <li><i class="fa-solid fa-check"></i> Acabamento com cera de alta performance</li>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="card-header">
+                        <h4>Lavagem Completa</h4>
+                        <div class="price">R$ 60</div>
+                    </div>
+                    <p class="card-description">O essencial para manter a conservação ideal e higiene interna do seu automóvel.</p>
+                    <ul class="card-features">
+                        <li>Lavagem interna detalhada</li>
+                        <li>Lavagem externa técnica</li>
                     </ul>
-
-                    <a href="https://wa.me/5555999999999?text=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20sobre%20os%20servi%C3%A7os!" target="_blank" class="btn-secondary">
-                        Quero Deixar Meu Carro Impecável
-                    </a>
+                    <a href="https://wa.me/5555999999999" target="_blank" class="card-btn">Escolher Plano</a>
                 </div>
-                <div class="blue-card-image">
-                    <!-- Imagem representativa de alta qualidade obtida do Unsplash -->
-                    <img src="https://images.unsplash.com/photo-1601362840469-51e4d8d59085?auto=format&fit=crop&w=800&q=80" alt="Carro Limpo e Espelhado - Ferreira Delivery">
+
+                <div class="pricing-card premium">
+                    <div class="card-header">
+                        <span class="recommend-badge">Mais Escolhido</span>
+                        <h4>Lavagem Premium</h4>
+                        <div class="price">R$ 80</div>
+                    </div>
+                    <p class="card-description">Proteção avançada com cera de alta performance e brilho espelhado duradouro.</p>
+                    <ul class="card-features">
+                        <li>Lavagem interna profunda</li>
+                        <li>Lavagem externa técnica</li>
+                        <li>Aplicação de cera de alta performance</li>
+                    </ul>
+                    <a href="https://wa.me/5555999999999" target="_blank" class="card-btn primary">Escolher Plano</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- RODAPÉ -->
-    <footer class="main-footer">
-        <div class="container footer-container">
-            <p>&copy; 2026 Ferreira Delivery Detail. Todos os direitos reservados.</p>
-            <p><i class="fa-solid fa-location-dot"></i> Santiago - RS</p>
-        </div>
+    <footer class="footer">
+        <p>&copy; 2026 Ferreira Delivery Detail &bull; Santiago, RS</p>
     </footer>
 
-    <!-- BOTÃO FLUTUANTE DO WHATSAPP -->
-    <a href="https://wa.me/5555999999999?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20um%20hor%C3%A1rio!" class="whatsapp-float" target="_blank">
-        <i class="fa-brands fa-whatsapp"></i>
-    </a>
-
+    <script src="script.js"></script>
 </body>
 </html>
