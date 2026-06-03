@@ -74,7 +74,7 @@ body {
 
 .nav-brand { font-weight: 600; font-size: 1rem; letter-spacing: -0.3px; color: var(--text-white); }
 
-/* GRUPO DA ESQUERDA (Bloqueia o desalinhamento no Desktop) */
+/* GRUPO DA ESQUERDA */
 .nav-left-group {
     position: relative;
     display: flex;
@@ -103,7 +103,7 @@ body {
 .menu-toggle-icon.open { transform: rotate(-45deg); }
 .menu-toggle-icon.open .animated-path { stroke-dasharray: 20 300; stroke-dashoffset: -32.42px; }
 
-/* MENU DESKTOP (Sempre fixado à direita do botão) */
+/* MENU DESKTOP */
 .nav-horizontal-menu {
     display: flex; align-items: center; gap: 28px;
     background: rgba(255, 255, 255, 0.03);
@@ -136,7 +136,7 @@ body {
     padding: 6px 16px; background: var(--text-white); color: var(--bg-dark); font-size: 0.8rem; font-weight: 600; border-radius: 100px;
 }
 
-/* HERO REFORMULADO (Layout Lado a Lado + Vídeo Vertical) */
+/* HERO REFORMULADO (Layout Aproximado e Harmônico) */
 .hero {
     min-height: 100vh;
     display: flex;
@@ -148,16 +148,17 @@ body {
 }
 
 .hero-flex-container {
-    max-width: 1200px;
+    max-width: 1100px;
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 60px;
+    justify-content: center; /* Centraliza os dois elementos */
+    gap: 80px; /* Mantém uma proximidade harmônica perfeita */
 }
 
 .hero-left-text {
     flex: 1;
+    max-width: 480px;
     text-align: left;
     display: flex;
     flex-direction: column;
@@ -165,31 +166,57 @@ body {
 }
 
 .logo-container { margin: 15px 0 0 0; width: 100%; }
-.hero-logo { max-width: 480px; width: 100%; height: auto; filter: drop-shadow(0 0 50px rgba(45, 165, 223, 0.18)); }
+.hero-logo { width: 100%; height: auto; filter: drop-shadow(0 0 50px rgba(45, 165, 223, 0.18)); }
 
-/* Container do Vídeo Vertical (Proporção 9:16) */
+/* Container do Vídeo Vertical */
 .hero-video-wrapper {
-    position: relative;
-    width: 320px;
-    aspect-ratio: 9 / 16;
-    border-radius: 18px;
-    overflow: hidden;
+    position: relative !important;
+    width: 320px !important;
+    max-width: 100% !important;
+    aspect-ratio: 9 / 16 !important;
+    border-radius: 18px !important;
+    overflow: hidden !important;
+    cursor: pointer !important;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 40px rgba(45, 165, 223, 0.15);
     border: 1px solid rgba(255, 255, 255, 0.08);
+    background-color: #0c0c0c;
 }
 
-.hero-video-wrapper video { width: 100%; height: 100%; object-fit: cover; }
+.hero-video-wrapper video { 
+    width: 100% !important; 
+    height: 100% !important; 
+    object-fit: cover !important; 
+}
 
-/* Botão Mute/Unmute Estilo Vidro Fosco */
+/* Botão de Controle de Áudio */
 .video-audio-control {
-    position: absolute; bottom: 16px; right: 16px;
-    width: 38px; height: 38px; border-radius: 50%;
-    background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.15); color: var(--text-white);
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer; z-index: 10; transition: all 0.3s ease;
+    position: absolute !important; 
+    bottom: 20px !important; 
+    right: 20px !important;
+    width: 42px !important; 
+    height: 42px !important; 
+    border-radius: 50% !important;
+    background: rgba(0, 0, 0, 0.75) !important; 
+    backdrop-filter: blur(8px) !important; 
+    -webkit-backdrop-filter: blur(8px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important; 
+    color: var(--text-white) !important;
+    display: flex !important; 
+    align-items: center !important; 
+    justify-content: center !important;
+    cursor: pointer !important; 
+    z-index: 10 !important; 
+    transition: all 0.3s ease !important;
 }
-.video-audio-control:hover { background: rgba(45, 165, 223, 0.3); border-color: var(--blue-glow); transform: scale(1.05); }
+.video-audio-control:hover { background: rgba(45, 165, 223, 0.5) !important; border-color: var(--blue-glow) !important; transform: scale(1.08); }
+
+/* Lógica de exibição do ícone de som */
+.video-audio-control .icon-playing { display: none; }
+.video-audio-control .icon-muted { display: block; }
+
+.video-audio-control.sound-on .icon-playing { display: block; }
+.video-audio-control.sound-on .icon-muted { display: none; }
+
 
 .scroll-arrow { 
     position: absolute; bottom: 30px;
@@ -263,42 +290,23 @@ body {
 .scroll-reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); }
 .scroll-reveal.active { opacity: 1; transform: translateY(0); }
 
-/* RESPONSIVIDADE (Ajuste Fino Geral + Pílula Mobile Centralizada) */
+/* RESPONSIVIDADE */
 @media (max-width: 968px) {
     .pricing-grid { grid-template-columns: 1fr; }
     .glass-card { width: 90vw; }
     .glass-card-content { padding: 40px 24px; }
     .about-title { font-size: 2.2rem; margin-bottom: 40px; }
     
-    /* Configuração da Pílula Flutuante no Mobile */
     .nav-horizontal-menu { 
-        position: fixed;
-        left: 50%; 
-        top: 90px; 
-        width: calc(100% - 48px); 
-        max-width: 360px; 
-        justify-content: center;
-        gap: 20px; 
-        padding: 10px 24px; 
-        border-radius: 100px; 
-        
-        transform: translate(-50%, -12px) scale(0.95);
-        transform-origin: center top; 
+        position: fixed; left: 50%; top: 90px; width: calc(100% - 48px); max-width: 360px; 
+        justify-content: center; gap: 20px; padding: 10px 24px; border-radius: 100px; 
+        transform: translate(-50%, -12px) scale(0.95); transform-origin: center top; 
         transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
+    .nav-horizontal-menu.active { opacity: 1; pointer-events: all; transform: translate(-50%, 0) scale(1); }
 
-    .nav-horizontal-menu.active { 
-        opacity: 1;
-        pointer-events: all;
-        transform: translate(-50%, 0) scale(1); 
-    }
-
-    .nav-horizontal-menu a.menu-item { font-size: 0.85rem; }
-    .nav-horizontal-menu .nav-btn { padding: 6px 14px; font-size: 0.78rem; }
-
-    /* Adaptação do Hero para Celular (Empilhado) */
     .hero { padding: 120px 24px 60px 24px; }
     .hero-flex-container { flex-direction: column; text-align: center; gap: 40px; }
     .hero-left-text { align-items: center; text-align: center; }
-    .hero-video-wrapper { width: 260px; }
+    .hero-video-wrapper { width: 260px !important; }
 }
