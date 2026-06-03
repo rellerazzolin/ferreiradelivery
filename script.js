@@ -61,24 +61,35 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 
-    // 4. CONTROLE DE ÁUDIO DO VÍDEO DO HERO (MUTADO/DESMUTADO)
+    // 4. CONTROLE DE INTERAÇÃO DO VÍDEO (PLAY/PAUSE E SOM)
+    const videoWrapper = document.querySelector(".hero-video-wrapper");
     const heroVideo = document.getElementById("hero-video");
     const unmuteBtn = document.getElementById("unmute-btn");
-    const audioIconPath = document.getElementById("audio-icon-path");
 
-    // Vetores de desenho dos ícones (Som Ligado vs Som Desligado)
-    const soundOnPath = "M11 5L6 9H2v6h4l5 4V5zM15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14";
-    const soundOffPath = "M11 5L6 9H2v6h4l5 4V5zM23 9s-2 2-2 3 2 3 2 3M19 7s-1.5 2-1.5 5 1.5 5 1.5 5";
-
-    if (heroVideo && unmuteBtn && audioIconPath) {
-        unmuteBtn.addEventListener("click", () => {
-            if (heroVideo.muted) {
-                heroVideo.muted = false;
-                audioIconPath.setAttribute("d", soundOnPath);
+    if (videoWrapper && heroVideo) {
+        
+        // Clicar no vídeo alterna entre Play e Pause
+        videoWrapper.addEventListener("click", () => {
+            if (heroVideo.paused) {
+                heroVideo.play().catch(err => console.log("Erro ao reproduzir:", err));
             } else {
-                heroVideo.muted = true;
-                audioIconPath.setAttribute("d", soundOffPath);
+                heroVideo.pause();
             }
         });
+
+        // Controle do áudio (Mute / Unmute)
+        if (unmuteBtn) {
+            unmuteBtn.addEventListener("click", (e) => {
+                e.stopPropagation(); // Evita dar pause no vídeo ao clicar no botão de som
+                
+                if (heroVideo.muted) {
+                    heroVideo.muted = false;
+                    unmuteBtn.classList.add("sound-on"); // Ativa ícone de som tocando
+                } else {
+                    heroVideo.muted = true;
+                    unmuteBtn.classList.remove("sound-on"); // Volta para ícone mutado
+                }
+            });
+        }
     }
 });
