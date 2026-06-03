@@ -12,7 +12,6 @@ document.addEventListener("DOMContentLoaded", () => {
             navHorizontalMenu.classList.toggle("active");
         });
 
-        // Fecha o menu automaticamente ao clicar em um link
         menuItems.forEach(item => {
             item.addEventListener("click", () => {
                 menuToggleSvg.classList.remove("open");
@@ -60,4 +59,26 @@ document.addEventListener("DOMContentLoaded", () => {
             blob3.style.opacity = currentOpacity;
         }
     });
+
+
+    // 4. CONTROLE DE ÁUDIO DO VÍDEO DO HERO (MUTADO/DESMUTADO)
+    const heroVideo = document.getElementById("hero-video");
+    const unmuteBtn = document.getElementById("unmute-btn");
+    const audioIconPath = document.getElementById("audio-icon-path");
+
+    // Vetores de desenho dos ícones (Som Ligado vs Som Desligado)
+    const soundOnPath = "M11 5L6 9H2v6h4l5 4V5zM15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14";
+    const soundOffPath = "M11 5L6 9H2v6h4l5 4V5zM23 9s-2 2-2 3 2 3 2 3M19 7s-1.5 2-1.5 5 1.5 5 1.5 5";
+
+    if (heroVideo && unmuteBtn && audioIconPath) {
+        unmuteBtn.addEventListener("click", () => {
+            if (heroVideo.muted) {
+                heroVideo.muted = false;
+                audioIconPath.setAttribute("d", soundOnPath);
+            } else {
+                heroVideo.muted = true;
+                audioIconPath.setAttribute("d", soundOffPath);
+            }
+        });
+    }
 });
