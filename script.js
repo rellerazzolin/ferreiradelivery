@@ -8,13 +8,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (menuWrapper && menuToggleSvg && navHorizontalMenu) {
         menuWrapper.addEventListener("click", () => {
-            // Liga/Desliga a animação complexa do SVG
             menuToggleSvg.classList.toggle("open");
-            // Liga/Desliga a expansão do menu horizontal
             navHorizontalMenu.classList.toggle("active");
         });
 
-        // Fecha o menu automaticamente quando clica em uma opção do menu
+        // Fecha o menu automaticamente ao clicar em um link
         menuItems.forEach(item => {
             item.addEventListener("click", () => {
                 menuToggleSvg.classList.remove("open");
@@ -38,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
     revealElements.forEach(element => revealObserver.observe(element));
 
 
-    // 3. LOGICA INTENSIVA DO MESH GRADIENT (3 PONTOS SE TORNAM 2 + MOVE)
+    // 3. MOVIMENTO DO MESH GRADIENT NO SCROLL
     const blob1 = document.querySelector(".aurora-1");
     const blob2 = document.querySelector(".aurora-2");
     const blob3 = document.querySelector(".aurora-3");
