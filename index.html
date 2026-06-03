@@ -11,26 +11,32 @@
 </head>
 <body>
 
-    <!-- Fundo Animado Mesh Gradient -->
     <div class="aurora-bg">
         <div class="aurora-blob aurora-1"></div>
         <div class="aurora-blob aurora-2"></div>
         <div class="aurora-blob aurora-3"></div>
     </div>
 
-    <!-- Navbar Minimalista -->
     <nav class="navbar">
         <div class="nav-container">
-            <span class="nav-brand">Ferreira Delivery</span>
-            <div class="nav-links">
-                <a href="#sobre">Sobre</a>
-                <a href="#planos">Planos</a>
+            
+            <div class="menu-wrapper">
+                <svg id="menu-toggle-svg" class="menu-toggle-icon" viewBox="0 0 32 32" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path class="animated-path" d="M27 10 13 10C10.8 10 9 8.2 9 6 9 3.5 10.8 2 13 2 15.2 2 17 3.8 17 6L17 26C17 28.2 18.8 30 21 30 23.2 30 25 28.2 25 26 25 23.8 23.2 22 21 22L7 22" />
+                    <path d="M7 16 27 16" />
+                </svg>
             </div>
-            <a href="https://wa.me/5555999999999" target="_blank" class="nav-btn">Agendar</a>
+
+            <div class="nav-horizontal-menu">
+                <a href="#sobre" class="menu-item">Sobre</a>
+                <a href="#planos" class="menu-item">Planos</a>
+                <a href="https://wa.me/5555999999999" target="_blank" class="nav-btn menu-item">Agendar</a>
+            </div>
+
+            <span class="nav-brand">Ferreira Delivery</span>
         </div>
     </nav>
 
-    <!-- Header Principal -->
     <header class="hero">
         <div class="hero-center">
             <div class="badge">lavação de alto padrão em santiago</div>
@@ -41,7 +47,6 @@
         </div>
     </header>
 
-    <!-- Seção Sobre Nós (Card Gigante de 65% da Tela) -->
     <section id="sobre" class="about-section scroll-reveal">
         <div class="section-container">
             <h2 class="about-title">Sobre Nós</h2>
@@ -53,7 +58,6 @@
         </div>
     </section>
 
-    <!-- Seção de Planos -->
     <section id="planos" class="pricing-section scroll-reveal">
         <div class="pricing-container">
             <div class="badge">Nossos Planos</div>
@@ -91,7 +95,6 @@
         </div>
     </section>
 
-    <!-- Rodapé -->
     <footer class="footer">
         <p>&copy; 2026 Ferreira Delivery Detail &bull; Santiago, RS</p>
     </footer>
