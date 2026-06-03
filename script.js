@@ -1,12 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     
-    // 1. REVELAÇÃO DAS SEÇÕES NO SCROLL
+    // 1. REVELAÇÃO DAS SEÇÕES NO SCROLL (INTERSECTION OBSERVER)
     const revealElements = document.querySelectorAll(".scroll-reveal");
-    const observerOptions = {
-        root: null,
-        threshold: 0.05
-    };
-
     const revealObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -14,33 +9,38 @@ document.addEventListener("DOMContentLoaded", () => {
                 observer.unobserve(entry.target);
             }
         });
-    }, observerOptions);
+    }, { root: null, threshold: 0.02 });
 
-    revealElements.forEach(element => {
-        revealObserver.observe(element);
-    });
+    revealElements.forEach(element => revealObserver.observe(element));
 
 
-    // 2. DINAMISMO DO MESH GRADIENT (3 PONTOS VIRAM 2)
+    // 2. LOGICA INTENSIVA DO MESH GRADIENT (3 PONTOS SE TORNAM 2 + MOVE)
     const blob1 = document.querySelector(".aurora-1");
     const blob2 = document.querySelector(".aurora-2");
     const blob3 = document.querySelector(".aurora-3");
 
+    // Vinculação direta para resposta instantânea ao scroll
     window.addEventListener("scroll", () => {
-        const scrollTop = window.scrollY;
-        const maxScroll = 700; 
-        const factor = Math.min(scrollTop / maxScroll, 1); // Gera um valor suave de 0 a 1 baseado no scroll
+        // Captura o scroll independente do navegador
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const maxScroll = window.innerHeight; // Usa a altura inteira da tela como base
+        const factor = Math.min(scrollTop / maxScroll, 1); // Fator vai de 0 a 1 de forma linear
 
         if (blob1 && blob2 && blob3) {
-            // Ponto 1 move levemente para a direita/baixo
-            blob1.style.transform = `translate(${factor * 90}px, ${factor * 60}px)`;
+            // Blob 1 se move na diagonal para a direita e para baixo
+            const b1X = factor * 160;
+            const b1Y = factor * 100;
+            blob1.style.transform = `translate(${b1X}px, ${b1Y}px)`;
 
-            // Ponto 2 se afasta diagonalmente para a esquerda/cima
-            blob2.style.transform = `translate(${factor * -70}px, ${factor * -90}px)`;
+            // Blob 2 se afasta bastante para a esquerda e para cima
+            const b2X = factor * -140;
+            const b2Y = factor * -120;
+            blob2.style.transform = `translate(${b2X}px, ${b2Y}px)`;
 
-            // Ponto 3 sofre FADE-OUT completo proporcional ao scroll
-            const originalOpacity = 0.28;
-            blob3.style.opacity = `${originalOpacity * (1 - factor)}`;
+            // Blob 3 faz o FADE OUT gradativo até sumir completamente (3 viram 2)
+            const initialOpacity = 0.35;
+            const currentOpacity = initialOpacity * (1 - factor);
+            blob3.style.opacity = currentOpacity;
         }
     });
 });
