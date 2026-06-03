@@ -60,28 +60,34 @@ body {
     color: var(--text-muted); letter-spacing: 0.5px; margin-bottom: 24px; text-transform: uppercase;
 }
 
-/* NAVBAR MODERNA (Borda Removida) */
+/* NAVBAR MODERNA (Sem Borda de Separação) */
 .navbar {
     position: fixed; top: 0; left: 0; width: 100%; height: 75px;
     backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
     z-index: 100;
-    /* border-bottom removido para sumir com a barra de separação */
 }
 
 .nav-container {
     max-width: 1300px; height: 100%; margin: 0 auto;
     display: flex; align-items: center; justify-content: space-between; padding: 0 32px;
-    position: relative;
 }
 
 .nav-brand { font-weight: 600; font-size: 1rem; letter-spacing: -0.3px; color: var(--text-white); }
 
-/* CONTAINER DO BOTÃO (Sempre por cima de tudo para aceitar cliques) */
+/* NOVO GRUPO DA ESQUERDA (Ancoragem absoluta para o menu) */
+.nav-left-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+/* CONTAINER DO BOTÃO */
 .menu-wrapper {
     display: flex; align-items: center; justify-content: center; 
     width: 44px; height: 44px; cursor: pointer;
     position: relative; 
-    z-index: 150; /* Garante que o X nunca seja sobreposto pelo menu */
+    z-index: 150; /* Garante que o X fique sempre por cima */
 }
 
 .menu-toggle-icon {
@@ -95,36 +101,32 @@ body {
     transition: stroke-dasharray 0.6s cubic-bezier(0.16, 1, 0.3, 1), stroke-dashoffset 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.menu-toggle-icon.open {
-    transform: rotate(-45deg);
-}
+.menu-toggle-icon.open { transform: rotate(-45deg); }
+.menu-toggle-icon.open .animated-path { stroke-dasharray: 20 300; stroke-dashoffset: -32.42px; }
 
-.menu-toggle-icon.open .animated-path {
-    stroke-dasharray: 20 300;
-    stroke-dashoffset: -32.42px;
-}
-
-/* NAV MENU HORIZONTAL (Abre exatamente à direita do botão) */
+/* NAV MENU HORIZONTAL DESKTOP (Sempre ao lado do botão) */
 .nav-horizontal-menu {
     display: flex; align-items: center; gap: 28px;
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.06);
     backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
     padding: 6px 24px; border-radius: 100px;
+    white-space: nowrap;
     
     position: absolute; 
-    left: 90px; /* Joga o menu para o lado direito do botão */
-    z-index: 140; /* Fica logo abaixo da camada do botão */
+    left: 55px; 
+    top: 50%;
+    z-index: 140; 
     
     opacity: 0; pointer-events: none;
-    transform: translateX(-15px) scaleX(0.95);
+    transform: translateY(-50%) translateX(-15px) scaleX(0.95);
     transform-origin: left center;
     transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .nav-horizontal-menu.active {
     opacity: 1; pointer-events: all;
-    transform: translateX(0) scaleX(1);
+    transform: translateY(-50%) translateX(0) scaleX(1);
 }
 
 .nav-horizontal-menu a.menu-item {
@@ -153,10 +155,7 @@ body {
 }
 
 .section-container { width: 100%; display: flex; flex-direction: column; align-items: center; text-align: center; }
-
-.about-title {
-    font-size: 3rem; font-weight: 600; color: var(--text-white); margin-bottom: 70px; letter-spacing: -1px;
-}
+.about-title { font-size: 3rem; font-weight: 600; color: var(--text-white); margin-bottom: 70px; letter-spacing: -1px; }
 
 .glass-card {
   width: 65vw; max-width: 1100px; min-height: 340px;
@@ -216,12 +215,37 @@ body {
 .scroll-reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); }
 .scroll-reveal.active { opacity: 1; transform: translateY(0); }
 
-/* RESPONSIVIDADE */
+/* RESPONSIVIDADE (Pílula Perfeita Centralizada no Mobile) */
 @media (max-width: 968px) {
     .pricing-grid { grid-template-columns: 1fr; }
     .glass-card { width: 90vw; }
     .glass-card-content { padding: 40px 24px; }
     .about-title { font-size: 2.2rem; margin-bottom: 40px; }
-    .nav-horizontal-menu { left: auto; right: 32px; top: 85px; transform-origin: top center; }
-    .nav-horizontal-menu.active { transform: translateY(0) scaleY(1); }
+    
+    .nav-horizontal-menu { 
+        position: fixed;
+        left: 50%; 
+        top: 90px; 
+        
+        width: calc(100% - 48px); 
+        max-width: 360px; 
+        
+        justify-content: center;
+        gap: 20px; 
+        padding: 10px 24px; 
+        border-radius: 100px; 
+        
+        transform: translate(-50%, -12px) scale(0.95);
+        transform-origin: center top; 
+        transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .nav-horizontal-menu.active { 
+        opacity: 1;
+        pointer-events: all;
+        transform: translate(-50%, 0) scale(1); 
+    }
+
+    .nav-horizontal-menu a.menu-item { font-size: 0.85rem; }
+    .nav-horizontal-menu .nav-btn { padding: 6px 14px; font-size: 0.78rem; }
 }
