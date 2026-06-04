@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (videoWrapper && heroVideo) {
         
-        // Clicar no vídeo alterna entre Play e Pause
+        // Clicar no wrapper do vídeo alterna perfeitamente entre Play e Pause
         videoWrapper.addEventListener("click", () => {
             if (heroVideo.paused) {
                 heroVideo.play().catch(err => console.log("Erro ao reproduzir:", err));
@@ -77,17 +77,17 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
-        // Controle do áudio (Mute / Unmute)
+        // Controle preciso do áudio (Mute / Unmute)
         if (unmuteBtn) {
             unmuteBtn.addEventListener("click", (e) => {
-                e.stopPropagation(); // Evita dar pause no vídeo ao clicar no botão de som
+                e.stopPropagation(); // Evita pausar o vídeo acidentalmente ao ligar o som
                 
                 if (heroVideo.muted) {
                     heroVideo.muted = false;
-                    unmuteBtn.classList.add("sound-on"); // Ativa ícone de som tocando
+                    unmuteBtn.classList.add("sound-on"); // Mostra o ícone de som ativo
                 } else {
                     heroVideo.muted = true;
-                    unmuteBtn.classList.remove("sound-on"); // Volta para ícone mutado
+                    unmuteBtn.classList.remove("sound-on"); // Volta para o ícone mutado
                 }
             });
         }
