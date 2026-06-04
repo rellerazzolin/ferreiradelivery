@@ -136,37 +136,66 @@ body {
     padding: 6px 16px; background: var(--text-white); color: var(--bg-dark); font-size: 0.8rem; font-weight: 600; border-radius: 100px;
 }
 
-/* HERO REFORMULADO (Layout Aproximado e Harmônico) */
+/* HERO NOVO ESTILO: PREMIUM TIPOGRÁFICO */
 .hero {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 120px 32px 40px 32px;
+    padding: 140px 32px 60px 32px;
     position: relative;
 }
 
 .hero-flex-container {
-    max-width: 1100px;
+    max-width: 1150px;
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: center; /* Centraliza os dois elementos */
-    gap: 80px; /* Mantém uma proximidade harmônica perfeita */
+    justify-content: center; /* Centralização harmônica perfeita */
+    gap: 90px; /* Mantém os dois lados integrados mas com respiro */
 }
 
+/* Bloco de Texto Esquerdo Totalmente Reformulado */
 .hero-left-text {
     flex: 1;
-    max-width: 480px;
+    max-width: 540px;
     text-align: left;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
 }
 
-.logo-container { margin: 15px 0 0 0; width: 100%; }
-.hero-logo { width: 100%; height: auto; filter: drop-shadow(0 0 50px rgba(45, 165, 223, 0.18)); }
+/* Container da Logo Pequena no topo da Head */
+.logo-container-hero {
+    margin-bottom: 24px;
+}
+.hero-mini-logo {
+    height: 48px; /* Pequeno, elegante e simétrico */
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 0 25px rgba(45, 165, 223, 0.25));
+}
+
+/* Head Estilo SaaS Premium */
+.hero-title {
+    font-size: 3.4rem;
+    font-weight: 700;
+    line-height: 1.12; /* Entrelinha bem junta e sofisticada */
+    letter-spacing: -2px; /* Redução de espaço para ar moderno */
+    color: var(--text-white);
+    margin-bottom: 24px;
+}
+
+/* Subhead Elegante e Fina */
+.hero-subtitle {
+    font-size: 1.15rem;
+    font-weight: 300; /* Tipografia fina e limpa */
+    line-height: 1.65;
+    color: rgba(255, 255, 255, 0.65); /* Opacidade suave idêntica ao exemplo */
+    letter-spacing: 0.2px;
+    max-width: 480px;
+}
 
 /* Container do Vídeo Vertical */
 .hero-video-wrapper {
@@ -210,13 +239,12 @@ body {
 }
 .video-audio-control:hover { background: rgba(45, 165, 223, 0.5) !important; border-color: var(--blue-glow) !important; transform: scale(1.08); }
 
-/* Lógica de exibição do ícone de som */
+/* Lógica de exibição dos ícones nativos */
 .video-audio-control .icon-playing { display: none; }
 .video-audio-control .icon-muted { display: block; }
 
 .video-audio-control.sound-on .icon-playing { display: block; }
 .video-audio-control.sound-on .icon-muted { display: none; }
-
 
 .scroll-arrow { 
     position: absolute; bottom: 30px;
@@ -290,7 +318,7 @@ body {
 .scroll-reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); }
 .scroll-reveal.active { opacity: 1; transform: translateY(0); }
 
-/* RESPONSIVIDADE */
+/* RESPONSIVIDADE ADAPTADA */
 @media (max-width: 968px) {
     .pricing-grid { grid-template-columns: 1fr; }
     .glass-card { width: 90vw; }
@@ -308,5 +336,7 @@ body {
     .hero { padding: 120px 24px 60px 24px; }
     .hero-flex-container { flex-direction: column; text-align: center; gap: 40px; }
     .hero-left-text { align-items: center; text-align: center; }
+    .hero-title { font-size: 2.2rem; letter-spacing: -1px; }
+    .hero-subtitle { font-size: 1rem; }
     .hero-video-wrapper { width: 260px !important; }
 }
