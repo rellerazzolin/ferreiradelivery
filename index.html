@@ -4,22 +4,485 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ferreira Delivery | Premium Detailing</title>
-    <link rel="stylesheet" href="style.css?v=6">
+    
+    <!-- Importação das Fontes Oficiais: Plus Jakarta Sans (Headings) e Montserrat (Subhead/Body) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Montserrat:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ==========================================================================
+           RESET & CONFIGURAÇÕES GERAIS
+           ========================================================================== */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg-dark: #000000;
+            --text-white: #ffffff;
+            --text-muted: #8e8e93;
+            --blue-glow: #2DA5DF;
+            --font-heading: 'Plus Jakarta Sans', sans-serif;
+            --font-body: 'Montserrat', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            background-color: var(--bg-dark);
+            font-family: var(--font-body);
+            color: var(--text-white);
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* ==========================================================================
+           AURORAS E GLOWS CONTINUOS (Z-INDEX GLOBAL PARA EVITAR CORTES NO SCROLL)
+           ========================================================================== */
+        .aurora-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; 
+            background: var(--bg-dark);
+            overflow: hidden; 
+            pointer-events: none;
+        }
+
+        .aurora-blob {
+            position: absolute; 
+            border-radius: 50%; 
+            filter: blur(130px); 
+            opacity: 0.35;
+            mix-blend-mode: screen;
+            will-change: transform, opacity;
+        }
+
+        .aurora-1 {
+            top: -5%; left: 25%; width: 550px; height: 550px;
+            background: radial-gradient(circle, var(--blue-glow) 0%, rgba(0,0,0,0) 70%);
+        }
+
+        .aurora-2 {
+            bottom: 15%; right: -5%; width: 600px; height: 600px;
+            background: radial-gradient(circle, #1B81B3 0%, rgba(0,0,0,0) 70%);
+        }
+
+        .aurora-3 {
+            top: 40%; left: -10%; width: 450px; height: 450px;
+            background: radial-gradient(circle, rgba(45,165,223,0.5) 0%, rgba(0,0,0,0) 70%);
+        }
+
+        /* Seções transparentes garantem que os glows continuem descendo sem cortes */
+        .hero, .about-section, .pricing-section, .footer {
+            background: transparent !important;
+        }
+
+        .badge {
+            display: inline-block; padding: 6px 14px;
+            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 100px; font-size: 0.72rem; font-weight: 500;
+            color: var(--text-muted); letter-spacing: 0.5px; margin-bottom: 24px; text-transform: uppercase;
+        }
+
+        /* ==========================================================================
+           NAVBAR ESTÁVEL E MENUS
+           ========================================================================== */
+        .navbar {
+            position: fixed; top: 0; left: 0; width: 100%; height: 75px;
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1300px; height: 100%; margin: 0 auto;
+            display: flex; align-items: center; justify-content: space-between; padding: 0 32px;
+        }
+
+        .nav-brand { 
+            font-family: var(--font-heading);
+            font-weight: 600; 
+            font-size: 1rem; 
+            letter-spacing: -0.3px; 
+            color: var(--text-white); 
+        }
+
+        .nav-left-group {
+            position: relative;
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+
+        .menu-wrapper {
+            display: flex; align-items: center; justify-content: center; 
+            width: 44px; height: 44px; cursor: pointer;
+            position: relative; 
+            z-index: 150;
+        }
+
+        .menu-toggle-icon {
+            width: 38px; height: 38px;
+            color: var(--text-white);
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .animated-path {
+            stroke-dasharray: 12 63;
+            transition: stroke-dasharray 0.6s cubic-bezier(0.16, 1, 0.3, 1), stroke-dashoffset 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .menu-toggle-icon.open { transform: rotate(-45deg); }
+        .menu-toggle-icon.open .animated-path { stroke-dasharray: 20 300; stroke-dashoffset: -32.42px; }
+
+        .nav-horizontal-menu {
+            display: flex; align-items: center; gap: 28px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            padding: 6px 24px; border-radius: 100px;
+            white-space: nowrap;
+            
+            position: absolute; 
+            left: 55px; 
+            top: 50%;
+            z-index: 140; 
+            
+            opacity: 0; pointer-events: none;
+            transform: translateY(-50%) translateX(-15px) scaleX(0.95);
+            transform-origin: left center;
+            transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .nav-horizontal-menu.active {
+            opacity: 1; pointer-events: all;
+            transform: translateY(-50%) translateX(0) scaleX(1);
+        }
+
+        .nav-horizontal-menu a.menu-item {
+            color: var(--text-muted); text-decoration: none; font-size: 0.88rem; font-weight: 500; transition: color 0.3s;
+        }
+        .nav-horizontal-menu a.menu-item:hover { color: var(--text-white); }
+        .nav-horizontal-menu .nav-btn {
+            padding: 6px 16px; background: var(--text-white); color: var(--bg-dark); font-size: 0.8rem; font-weight: 600; border-radius: 100px;
+        }
+
+        /* ==========================================================================
+           HERO COM VÍDEO VERTICAL E TIPOGRAFIA DE LUXO
+           ========================================================================== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 140px 32px 60px 32px;
+            position: relative;
+        }
+
+        .hero-flex-container {
+            max-width: 1150px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 90px; /* Alinhamento harmônico de proximidade */
+        }
+
+        .hero-left-text {
+            flex: 1;
+            max-width: 540px;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        /* LOGO MINIMALISTA DO TOPO DO TEXTO (TRAVADA CONTRA DISTORÇÕES) */
+        .logo-container-hero {
+            margin-bottom: 28px;
+            display: block;
+        }
+        
+        .hero-mini-logo {
+            max-width: 155px !important;   
+            max-height: 42px !important;   
+            width: auto !important;
+            height: auto !important;
+            object-fit: contain;
+            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.08));
+        }
+
+        /* HEADLINE COM TEXTURA METALIZADA E GLOW CELESTIAL */
+        .hero-title {
+            font-family: var(--font-heading);
+            font-size: 3.3rem;
+            font-weight: 700;
+            line-height: 1.15;
+            letter-spacing: -0.03em;
+            color: var(--text-white);
+            margin-bottom: 32px;
+        }
+
+        /* Textura metálica suave na tipografia */
+        .text-metallic {
+            background: linear-gradient(180deg, #FFFFFF 20%, #B8B8BC 75%, #8E8E93 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-block;
+        }
+
+        /* Cor ciano idêntica ao design com glow de alta fidelidade */
+        .text-cyan {
+            color: var(--blue-glow);
+            text-shadow: 0 0 30px rgba(45, 165, 223, 0.5);
+            display: inline-block;
+        }
+
+        /* SUBHEADLINE MONTSERRAT LIGHT COM ESPAÇAMENTO REFINADO */
+        .hero-subtitle-container {
+            font-family: var(--font-body);
+        }
+
+        .hero-subtitle-bold {
+            font-size: 1.18rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 8px;
+            letter-spacing: 0.02em;
+        }
+
+        .hero-subtitle-light {
+            font-size: 1.05rem;
+            font-weight: 300; /* Montserrat Light */
+            color: rgba(255, 255, 255, 0.55);
+            line-height: 1.7;
+            max-width: 480px;
+            letter-spacing: 0.01em;
+        }
+
+        /* CONTAINER DO VÍDEO VERTICAL (9:16) */
+        .hero-video-wrapper {
+            position: relative !important;
+            width: 320px !important;
+            max-width: 100% !important;
+            aspect-ratio: 9 / 16 !important;
+            border-radius: 18px !important;
+            overflow: hidden !important;
+            cursor: pointer !important;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 40px rgba(45, 165, 223, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background-color: #0c0c0c;
+        }
+
+        .hero-video-wrapper video { 
+            width: 100% !important; 
+            height: 100% !important; 
+            object-fit: cover !important; 
+        }
+
+        /* BOTÃO DE CONTROLE DE ÁUDIO REFINADO */
+        .video-audio-control {
+            position: absolute !important; 
+            bottom: 20px !important; 
+            right: 20px !important;
+            width: 42px !important; 
+            height: 42px !important; 
+            border-radius: 50% !important;
+            background: rgba(0, 0, 0, 0.75) !important; 
+            backdrop-filter: blur(8px) !important; 
+            -webkit-backdrop-filter: blur(8px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.25) !important; 
+            color: var(--text-white) !important;
+            display: flex !important; 
+            align-items: center !important; 
+            justify-content: center !important;
+            cursor: pointer !important; 
+            z-index: 10 !important; 
+            transition: all 0.3s ease !important;
+        }
+        .video-audio-control:hover { background: rgba(45, 165, 223, 0.5) !important; border-color: var(--blue-glow) !important; transform: scale(1.08); }
+
+        .video-audio-control .icon-playing { display: none; }
+        .video-audio-control .icon-muted { display: block; }
+
+        .video-audio-control.sound-on .icon-playing { display: block; }
+        .video-audio-control.sound-on .icon-muted { display: none; }
+
+        .scroll-arrow { 
+            position: absolute; bottom: 30px;
+            font-size: 1.3rem; color: var(--text-muted); animation: bounce 2s infinite; 
+        }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
+
+        /* ==========================================================================
+           SEÇÃO SOBRE NÓS COM GLASS-CARD AMPLIADO
+           ========================================================================== */
+        .about-section {
+            min-height: 95vh; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            padding: 120px 24px;
+        }
+
+        .section-container { 
+            width: 100%; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            text-align: center; 
+        }
+
+        .about-title { 
+            font-family: var(--font-heading);
+            font-size: 3rem; 
+            font-weight: 700; 
+            color: var(--text-white); 
+            margin-bottom: 50px; 
+            letter-spacing: -1px; 
+        }
+
+        /* CARD MAIOR COM GLASSMORPHISM DE ALTO PADRÃO */
+        .glass-card {
+            width: 80vw; /* Card mais robusto na tela */
+            max-width: 1200px; 
+            min-height: 280px;
+            background: rgba(255, 255, 255, 0.015); /* Transparência fina de alta fidelidade */
+            backdrop-filter: blur(20px); 
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 24px; 
+            border: 1px solid rgba(255, 255, 255, 0.08); /* Borda extremamente fina */
+            position: relative; 
+            overflow: hidden; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.4s;
+        }
+
+        .glass-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+        }
+
+        .glass-card:hover {
+            border-color: rgba(45, 165, 223, 0.4); 
+            transform: translateY(-5px);
+            box-shadow: 0 50px 110px rgba(45, 165, 223, 0.08);
+        }
+
+        .glass-card-content { 
+            padding: 80px 100px; /* Padding espaçado e refinado */
+            width: 100%; 
+            height: 100%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+        }
+
+        /* Tipografia de leitura do Card */
+        .glass-card-content p { 
+            font-family: var(--font-body);
+            font-weight: 300; /* Montserrat Light */
+            font-size: 1.25rem; 
+            color: rgba(255, 255, 255, 0.7); 
+            line-height: 1.9; 
+            letter-spacing: 0.3px; 
+            text-shadow: 0 2px 12px rgba(0,0,0,0.5); 
+        }
+
+        .glass-card-content strong {
+            font-weight: 600; /* Destaques em Montserrat Medium */
+            color: var(--text-white);
+        }
+
+        /* ==========================================================================
+           PLANOS E PREÇOS
+           ========================================================================== */
+        .pricing-section { padding: 120px 24px 160px 24px; }
+        .pricing-container { max-width: 900px; margin: 0 auto; text-align: center; }
+        .section-title { font-family: var(--font-heading); font-size: 2.2rem; font-weight: 700; letter-spacing: -1px; margin-bottom: 60px; }
+        .pricing-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; }
+
+        .pricing-card {
+            background: rgba(255, 255, 255, 0.01); border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 24px; padding: 40px 30px; text-align: left; display: flex; flex-direction: column;
+            position: relative; transition: all 0.4s ease;
+        }
+
+        .pricing-card:hover { border-color: rgba(45, 165, 223, 0.3); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4); transform: translateY(-4px); }
+        .pricing-card.premium { background: rgba(45, 165, 223, 0.01); border: 1px solid rgba(45, 165, 223, 0.2); }
+        .pricing-card.premium:hover { border-color: rgba(45, 165, 223, 0.6); box-shadow: 0 20px 40px rgba(45, 165, 223, 0.12); }
+
+        .card-header { margin-bottom: 25px; position: relative; }
+        .recommend-badge { position: absolute; top: -60px; right: 0; background: var(--blue-glow); color: var(--text-white); font-size: 0.7rem; font-weight: 600; padding: 4px 10px; border-radius: 100px; text-transform: uppercase; }
+        .card-header h4 { font-family: var(--font-heading); font-size: 1.25rem; font-weight: 600; margin-bottom: 8px; }
+        .price { font-family: var(--font-heading); font-size: 2.4rem; font-weight: 700; letter-spacing: -1px; }
+        .card-description { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 30px; min-height: 45px; }
+        .card-features { list-style: none; margin-bottom: 40px; flex-grow: 1; }
+        .card-features li { font-size: 0.85rem; color: rgba(255, 255, 255, 0.8); margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+        .card-features li::before { content: '—'; color: var(--blue-glow); font-weight: bold; }
+
+        .card-btn { display: block; width: 100%; padding: 14px; text-align: center; text-decoration: none; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.06); color: var(--text-white); font-size: 0.88rem; font-weight: 600; border-radius: 12px; transition: all 0.3s; }
+        .card-btn:hover { background: rgba(255, 255, 255, 0.08); }
+        .card-btn.primary { background: var(--text-white); color: var(--bg-dark); border: none; }
+        .card-btn.primary:hover { background: rgba(255, 255, 255, 0.9); }
+
+        .footer { padding: 40px 24px; text-align: center; border-top: 1px solid rgba(255, 255, 255, 0.01); font-size: 0.8rem; color: var(--text-muted); }
+
+        /* REVELAÇÃO NO SCROLL */
+        .scroll-reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); }
+        .scroll-reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* ==========================================================================
+           RESPONSIVIDADE ADAPTADA PARA CELULAR
+           ========================================================================== */
+        @media (max-width: 968px) {
+            .pricing-grid { grid-template-columns: 1fr; }
+            .glass-card { width: 90vw; }
+            .glass-card-content { padding: 40px 24px; }
+            .about-title { font-size: 2.2rem; margin-bottom: 40px; }
+            
+            .nav-horizontal-menu { 
+                position: fixed; left: 50%; top: 90px; width: calc(100% - 48px); max-width: 360px; 
+                justify-content: center; gap: 20px; padding: 10px 24px; border-radius: 100px; 
+                transform: translate(-50%, -12px) scale(0.95); transform-origin: center top; 
+                transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+            .nav-horizontal-menu.active { opacity: 1; pointer-events: all; transform: translate(-50%, 0) scale(1); }
+
+            .hero { padding: 120px 24px 60px 24px; }
+            .hero-flex-container { flex-direction: column; text-align: center; gap: 40px; }
+            .hero-left-text { align-items: center; text-align: center; }
+            
+            .hero-title { font-size: 2.3rem; letter-spacing: -1px; }
+            .hero-subtitle-light { font-size: 0.98rem; }
+            .hero-video-wrapper { width: 260px !important; }
+        }
+    </style>
 </head>
 <body>
 
+    <!-- Fundo Animado Mesh Gradient (Contínuo) -->
     <div class="aurora-bg">
         <div class="aurora-blob aurora-1"></div>
         <div class="aurora-blob aurora-2"></div>
         <div class="aurora-blob aurora-3"></div>
     </div>
 
+    <!-- Navbar -->
     <nav class="navbar">
         <div class="nav-container">
             
+            <!-- Grupo da Esquerda: Botão + Menu Trancados Juntos -->
             <div class="nav-left-group">
                 <div class="menu-wrapper">
                     <svg id="menu-toggle-svg" class="menu-toggle-icon" viewBox="0 0 32 32" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -28,6 +491,7 @@
                     </svg>
                 </div>
 
+                <!-- Nav Menu Horizontal -->
                 <div class="nav-horizontal-menu">
                     <a href="#sobre" class="menu-item">Sobre</a>
                     <a href="#planos" class="menu-item">Planos</a>
@@ -35,23 +499,37 @@
                 </div>
             </div>
 
+            <!-- Nome da marca na extrema direita -->
             <span class="nav-brand">Ferreira Delivery</span>
         </div>
     </nav>
 
+    <!-- Header Principal -->
     <header class="hero">
         <div class="hero-flex-container">
             
+            <!-- Lado Esquerdo: Bloco de Texto Alinhado Estilo Figma -->
             <div class="hero-left-text">
+                <!-- Logo Pequena no Topo da Head -->
                 <div class="logo-container-hero">
-                    <img src="logo.png" alt="Ferreira Delivery" class="hero-mini-logo">
+                    <img src="logohorizontal.png" alt="Ferreira Delivery" class="hero-mini-logo">
                 </div>
                 
-                <h1 class="hero-title">Ferreira Delivery, um novo conceito de lavagem automotiva.</h1>
+                <!-- Headline com Textura Metalizada e Glow Ciano -->
+                <h1 class="hero-title">
+                    <span class="text-metallic">Ferreira Delivery,</span><br>
+                    um <span class="text-cyan">novo conceito</span> de<br>
+                    <span class="text-cyan">lavagem automotiva.</span>
+                </h1>
                 
-                <p class="hero-subtitle">Estética automotiva de alto padrão direto na sua garagem. O cuidado detalhado que seu veículo merece, com a conveniência que o seu tempo exige.</p>
+                <!-- Subheadline Fina e Elegante em Montserrat -->
+                <div class="hero-subtitle-container">
+                    <p class="hero-subtitle-bold">Lavagem automotiva premium.</p>
+                    <p class="hero-subtitle-light">O cuidado detalhado que seu veículo merece, com a conveniência que o seu tempo exige.</p>
+                </div>
             </div>
 
+            <!-- Lado Direito: Vídeo Vertical Interativo -->
             <div class="hero-video-wrapper">
                 <video id="hero-video" autoplay muted loop playsinline preload="auto">
                     <source src="https://raw.githubusercontent.com/rellerazzolin/ferreiradelivery/main/videohero.mp4" type="video/mp4">
@@ -75,17 +553,21 @@
         <div class="scroll-arrow">↓</div>
     </header>
 
+    <!-- Seção Sobre Nós -->
     <section id="sobre" class="about-section scroll-reveal">
         <div class="section-container">
             <h2 class="about-title">Sobre Nós</h2>
             <div class="glass-card">
                 <div class="glass-card-content">
-                    <p>A Ferreira Delivery Detail leva o mais alto padrão de estética automotiva até a sua garagem em Santiago, RS. Realizamos lavagens técnicas e estéticas detalhadas com produtos premium de alta performance, garantindo a máxima conservação, brilho e proteção duradoura para o seu veículo enquanto você foca no que realmente importa.</p>
+                    <p>
+                        A <strong>Ferreira Delivery Detail leva o mais alto padrão de estética automotiva</strong> até a sua garagem em <strong>Santiago, RS</strong>. Realizamos lavagens técnicas e estéticas detalhadas com produtos premium de alta performance, garantindo a máxima conservação, brilho e proteção duradoura para o seu veículo enquanto você foca no que realmente importa.
+                    </p>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Seção de Planos -->
     <section id="planos" class="pricing-section scroll-reveal">
         <div class="pricing-container">
             <div class="badge">Nossos Planos</div>
@@ -123,10 +605,105 @@
         </div>
     </section>
 
+    <!-- Rodapé -->
     <footer class="footer">
         <p>&copy; 2026 Ferreira Delivery Detail &bull; Santiago, RS</p>
     </footer>
 
-    <script src="script.js?v=6"></script>
+    <!-- INTERAÇÕES INTERNAS DO PROJETO -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            
+            // 1. MENU RESPONSIVO E MORPHING DO HAMBÚRGUER (DOT MENU)
+            const menuWrapper = document.querySelector(".menu-wrapper");
+            const menuToggleSvg = document.getElementById("menu-toggle-svg");
+            const navHorizontalMenu = document.querySelector(".nav-horizontal-menu");
+            const menuItems = document.querySelectorAll(".menu-item");
+
+            if (menuWrapper && menuToggleSvg && navHorizontalMenu) {
+                menuWrapper.addEventListener("click", () => {
+                    menuToggleSvg.classList.toggle("open");
+                    navHorizontalMenu.classList.toggle("active");
+                });
+
+                menuItems.forEach(item => {
+                    item.addEventListener("click", () => {
+                        menuToggleSvg.classList.remove("open");
+                        navHorizontalMenu.classList.remove("active");
+                    });
+                });
+            }
+
+            // 2. REVELAÇÃO SUAVE DE ELEMENTOS NO SCROLL (INTERSECTION OBSERVER)
+            const revealElements = document.querySelectorAll(".scroll-reveal");
+            const revealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("active");
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { root: null, threshold: 0.02 });
+
+            revealElements.forEach(element => revealObserver.observe(element));
+
+            // 3. MOVIMENTO DINÂMICO DOS BLOBS AURORA COM SCROLL
+            const blob1 = document.querySelector(".aurora-1");
+            const blob2 = document.querySelector(".aurora-2");
+            const blob3 = document.querySelector(".aurora-3");
+
+            window.addEventListener("scroll", () => {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                const maxScroll = window.innerHeight; 
+                const factor = Math.min(scrollTop / maxScroll, 1); 
+
+                if (blob1 && blob2 && blob3) {
+                    const b1X = factor * 160;
+                    const b1Y = factor * 100;
+                    blob1.style.transform = `translate(${b1X}px, ${b1Y}px)`;
+
+                    const b2X = factor * -140;
+                    const b2Y = factor * -120;
+                    blob2.style.transform = `translate(${b2X}px, ${b2Y}px)`;
+
+                    const initialOpacity = 0.35;
+                    const currentOpacity = initialOpacity * (1 - factor);
+                    blob3.style.opacity = currentOpacity;
+                }
+            });
+
+            // 4. PLAYER DE VIDEO INTERATIVO (PLAY/PAUSE E CONTROLE DE MUTED)
+            const videoWrapper = document.querySelector(".hero-video-wrapper");
+            const heroVideo = document.getElementById("hero-video");
+            const unmuteBtn = document.getElementById("unmute-btn");
+
+            if (videoWrapper && heroVideo) {
+                
+                // Toggle de Play / Pause ao tocar diretamente no vídeo
+                videoWrapper.addEventListener("click", () => {
+                    if (heroVideo.paused) {
+                        heroVideo.play().catch(err => console.log("Erro de reprodução:", err));
+                    } else {
+                        heroVideo.pause();
+                    }
+                });
+
+                // Toggle de Som no botão flutuante
+                if (unmuteBtn) {
+                    unmuteBtn.addEventListener("click", (e) => {
+                        e.stopPropagation(); // Evita dar pausa no vídeo ao clicar apenas no ícone do som
+                        
+                        if (heroVideo.muted) {
+                            heroVideo.muted = false;
+                            unmuteBtn.classList.add("sound-on");
+                        } else {
+                            heroVideo.muted = true;
+                            unmuteBtn.classList.remove("sound-on");
+                        }
+                    });
+                }
+            }
+        });
+    </script>
 </body>
 </html>
