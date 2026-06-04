@@ -136,7 +136,7 @@ body {
     padding: 6px 16px; background: var(--text-white); color: var(--bg-dark); font-size: 0.8rem; font-weight: 600; border-radius: 100px;
 }
 
-/* HERO NOVO ESTILO: PREMIUM TIPOGRÁFICO */
+/* HERO PERFECCIONISTA: PREMIUM TIPOGRÁFICO */
 .hero {
     min-height: 100vh;
     display: flex;
@@ -152,11 +152,11 @@ body {
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: center; /* Centralização harmônica perfeita */
-    gap: 90px; /* Mantém os dois lados integrados mas com respiro */
+    justify-content: center;
+    gap: 90px; /* Distanciamento premium calibrado */
 }
 
-/* Bloco de Texto Esquerdo Totalmente Reformulado */
+/* Bloco de Texto Esquerdo - Estilo Vercel/SaaS */
 .hero-left-text {
     flex: 1;
     max-width: 540px;
@@ -166,34 +166,42 @@ body {
     align-items: flex-start;
 }
 
-/* Container da Logo Pequena no topo da Head */
+/* Trava absoluta na proporção da logo para nunca ficar gigante */
 .logo-container-hero {
-    margin-bottom: 24px;
+    margin-bottom: 32px; /* Espaço elegante antes do título */
+    display: block;
 }
 .hero-mini-logo {
-    height: 48px; /* Pequeno, elegante e simétrico */
-    width: auto;
+    max-width: 140px !important;   /* Tamanho horizontal fixado */
+    max-height: 38px !important;   /* Tamanho vertical fixado */
+    width: auto !important;
+    height: auto !important;
     object-fit: contain;
-    filter: drop-shadow(0 0 25px rgba(45, 165, 223, 0.25));
+    filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.1));
 }
 
-/* Head Estilo SaaS Premium */
+/* Título Principal com Glow Branco Suave Integrado */
 .hero-title {
     font-size: 3.4rem;
     font-weight: 700;
-    line-height: 1.12; /* Entrelinha bem junta e sofisticada */
-    letter-spacing: -2px; /* Redução de espaço para ar moderno */
+    line-height: 1.15;        /* Entrelinha compactada e cirúrgica */
+    letter-spacing: -0.03em;  /* Caracteres ligeiramente juntos para visual moderno */
     color: var(--text-white);
-    margin-bottom: 24px;
+    margin-bottom: 28px;      /* Distanciamento harmônico até a subhead */
+    
+    /* Glow branco suave de alta fidelidade */
+    text-shadow: 0 0 35px rgba(255, 255, 255, 0.22), 
+                 0 0 70px rgba(255, 255, 255, 0.08),
+                 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
-/* Subhead Elegante e Fina */
+/* Subhead Elegante, Leve e Espaçada */
 .hero-subtitle {
     font-size: 1.15rem;
-    font-weight: 300; /* Tipografia fina e limpa */
-    line-height: 1.65;
-    color: rgba(255, 255, 255, 0.65); /* Opacidade suave idêntica ao exemplo */
-    letter-spacing: 0.2px;
+    font-weight: 300;         /* Peso de fonte fino */
+    line-height: 1.7;         /* Excelente espaço vertical para leitura fluida */
+    color: rgba(255, 255, 255, 0.65); /* Opacidade refinada */
+    letter-spacing: 0.01em;
     max-width: 480px;
 }
 
